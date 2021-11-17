@@ -4,9 +4,10 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     private final int SIZE = 16;
 
-    class Entry{
+    class Entry<K,V> {
         K key;
         V value;
+
         public Entry(K key, V value){
             this.key = key;
             this.value = value;
@@ -45,7 +46,7 @@ public class OurHashMap<K,V> implements Map<K,V> {
         }
         for(Entry entry : list){
             if(entry.key.equals(key)){
-                return entry.value;
+                return (V) entry.value;
             }
         }
         return null;
@@ -60,13 +61,16 @@ public class OurHashMap<K,V> implements Map<K,V> {
             list = new ArrayList<Entry>();
             values[index] = list;
         }
-        for(Entry<K,V> entry : (List<Entry<K,V>>)list){
+        for(Entry<K,V> entry : (List<Entry<K,V>>) list){
             if(entry.key.equals(key)) {
                 V saved = entry.value;
                 entry.value = value;
+                return saved;
             }
         }
-        // todo return previous value
+
+        Entry entry = new Entry(key, value);
+        list.add(entry);
         return null;
     }
 
@@ -96,7 +100,7 @@ public class OurHashMap<K,V> implements Map<K,V> {
     }
 
     @Override
-    public Set<Entry> entrySet() {
+    public Set<java.util.Map.Entry<K,V>> entrySet() {
         return null;
     }
 }

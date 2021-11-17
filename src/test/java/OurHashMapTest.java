@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class OurHashMapTest {
 
     @Test
-    public void put(){
+    void put(){
         //given
         OurHashMap map = new OurHashMap<String, String>();
 
@@ -30,13 +30,12 @@ class OurHashMapTest {
         assertEquals("Priviyet", map.get("Russian"));
         assertEquals("Conichiwa", map.get("Japanese"));
         assertEquals("Ne How", map.get("Mandarin"));
-
     }
 
     @Test
-    public void get(){
+    void get(){
         //given
-        OurHashMap map = new OurHashMap();
+        OurHashMap<String,String> map = new OurHashMap<>();
 
         //when
 
@@ -45,4 +44,19 @@ class OurHashMapTest {
 
     }
 
+    @Test
+    void putSameKeys(){
+        // given
+        OurHashMap<String,String> map = new OurHashMap<>();
+
+        // when
+        map.put("English1", "Hello");
+        map.put("Spanish", "Hola");
+        map.put("Hebrew", "Shalom");
+        map.put("French", "Bonjour");
+        map.put("English1", "Hi");
+
+        // then
+        assertEquals("Hi", map.get("English1"));
+    }
 }
