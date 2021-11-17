@@ -1,11 +1,19 @@
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public class OurHashMap implements Map {
+public class OurHashMap<K,V> implements Map<K,V> {
 
-    private final int SIZE = 1024;
-    Object values[] = new Object[SIZE];
+    private final int SIZE = 16;
+
+    class Entry{
+        K key;
+        V value;
+        public Entry(K key, V value){
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    List<Entry> values[] = new List[SIZE];
 
     @Override
     public int size() {
@@ -28,23 +36,42 @@ public class OurHashMap implements Map {
     }
 
     @Override
-    public Object get(Object key) {
+    public V get(Object key) {
         int hashcode = key.hashCode();
         int index = Math.abs(hashcode) % SIZE;
-        return values[index];
+        List<Entry> list = values[index];
+        if(list == null){
+            return null;
+        }
+        for(Entry entry : list){
+            if(entry.key.equals(key)){
+                return entry.value;
+            }
+        }
+        return null;
     }
 
     @Override
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         int hashcode = key.hashCode();
         int index = Math.abs(hashcode) % SIZE;
-        values[index] = value;
+        List list = values[index];
+        if(list == null){
+            list = new ArrayList<Entry>();
+            values[index] = list;
+        }
+        for(Entry<K,V> entry : (List<Entry<K,V>>)list){
+            if(entry.key.equals(key)) {
+                V saved = entry.value;
+                entry.value = value;
+            }
+        }
         // todo return previous value
         return null;
     }
 
     @Override
-    public Object remove(Object o) {
+    public V remove(Object key) {
         return null;
     }
 
