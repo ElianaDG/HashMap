@@ -59,4 +59,39 @@ class OurHashMapTest {
         // then
         assertEquals("Hi", map.get("English1"));
     }
+
+    @Test
+    void size(){
+
+    }
+
+    @Test
+    void isEmpty(){
+
+    }
+
+    @Test
+    void containsKey(){
+
+    }
+
+    @Test
+    void containsValue(){
+
+    }
+
+    @Test
+    void remove(){
+
+    }
+
+    @Test
+    void keySet(){
+
+    }
+
+    @Test
+    void values(){
+        
+    }
 }
