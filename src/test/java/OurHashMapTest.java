@@ -100,8 +100,6 @@ class OurHashMapTest {
     void isNotEmpty(){
         //given
         OurHashMap map = new OurHashMap<String, String>();
-
-        //when
         map.put("Hebrew", "Shalom");
 
         //then
@@ -112,8 +110,6 @@ class OurHashMapTest {
     void containsKey(){
         //given
         OurHashMap map = new OurHashMap<String, String>();
-
-        //when
         map.put("Spanish","Hola");
         map.put("Hebrew","Shalom");
         map.put("French","Bonjour");
@@ -128,8 +124,6 @@ class OurHashMapTest {
     void containsValue(){
         //given
         OurHashMap map = new OurHashMap<String, String>();
-
-        //when
         map.put("English1","Hello");
         map.put("English2","Hi");
         map.put("English3","Hey");
@@ -145,11 +139,11 @@ class OurHashMapTest {
     void remove(){
         //given
         OurHashMap map = new OurHashMap<String, String>();
-
-        //when
         map.put("English1","Hello");
         map.put("English2","Hi");
         map.put("English3","Hey");
+
+        //when
         Object removed = map.remove("English1");
 
         //then
@@ -162,12 +156,12 @@ class OurHashMapTest {
         //given
         OurHashMap mapA = new OurHashMap<String, String>();
         OurHashMap mapB = new OurHashMap<String, String>();
-
-        //when
         mapA.put("English1","Hello");
         mapA.put("English2","Hi");
         mapA.put("English3","Hey");
         mapA.put("Spanish","Hola");
+
+        //when
         mapB.putAll(mapA);
 
         //then
@@ -182,11 +176,11 @@ class OurHashMapTest {
     void clear(){
         //given
         OurHashMap map = new OurHashMap<String, String>();
-
-        //when
         map.put("English1","Hello");
         map.put("English2","Hi");
         map.put("English3","Hey");
+
+        //when
         map.clear();
 
         //then
@@ -198,11 +192,11 @@ class OurHashMapTest {
     void keySet(){
         //given
         OurHashMap map = new OurHashMap<String, String>();
-
-        //when
         map.put("English1","Hello");
         map.put("English2","Hi");
         map.put("English3","Hey");
+
+        //when
         Set actualSet = map.keySet();
         Set expectedSet = new HashSet();
         expectedSet.add("English1");
@@ -218,11 +212,11 @@ class OurHashMapTest {
     void values(){
         //given
         OurHashMap map = new OurHashMap<String, String>();
-
-        //when
         map.put("English1","Hello");
         map.put("English2","Hi");
         map.put("English3","Hey");
+
+        //when
         Collection actual = map.values();
         Collection expected = new HashSet();
         expected.add("Hello");

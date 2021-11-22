@@ -21,7 +21,7 @@ public class OurHashMap<K,V> implements Map<K,V> {
     public int size() {
         int size = 0;
         for(List<Entry> list : values){
-            if(!(list == null)){
+            if(list != null){
                 size += list.size();
             }
         }
@@ -31,7 +31,7 @@ public class OurHashMap<K,V> implements Map<K,V> {
     @Override
     public boolean isEmpty() {
         for(List<Entry> list : values){
-            if(!(list == null)){
+            if(list != null){
                 if(!list.isEmpty()){
                     return false;
                 }
@@ -42,9 +42,7 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     @Override
     public boolean containsKey(Object key) {
-        int hashcode = key.hashCode();
-        int index = Math.abs(hashcode) % SIZE;
-        List<Entry> list = values[index];
+        List<Entry> list = getEntries(key);
         if(list == null){
             return false;
         }
@@ -59,7 +57,7 @@ public class OurHashMap<K,V> implements Map<K,V> {
     @Override
     public boolean containsValue(Object value) {
         for(List<Entry> list : values){
-            if(!(list == null)){
+            if(list != null){
                 for(Entry entry : list){
                     if(entry.value.equals(value)){
                         return true;
@@ -72,9 +70,7 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     @Override
     public V get(Object key) {
-        int hashcode = key.hashCode();
-        int index = Math.abs(hashcode) % SIZE;
-        List<Entry> list = values[index];
+        List<Entry> list = getEntries(key);
         if(list == null){
             return null;
         }
@@ -84,6 +80,12 @@ public class OurHashMap<K,V> implements Map<K,V> {
             }
         }
         return null;
+    }
+
+    private List<Entry> getEntries(Object key) {
+        int hashcode = key.hashCode();
+        int index = Math.abs(hashcode) % SIZE;
+        return values[index];
     }
 
     @Override
@@ -113,7 +115,7 @@ public class OurHashMap<K,V> implements Map<K,V> {
         int hashcode = key.hashCode();
         int index = Math.abs(hashcode) % SIZE;
         List<Entry> list = values[index];
-        if(!(list == null)){
+        if(list != null){
             for(Entry entry : list){
                 if(entry.key.equals(key)){
                     V value = (V) entry.value;
@@ -137,7 +139,7 @@ public class OurHashMap<K,V> implements Map<K,V> {
     @Override
     public void clear() {
         for(List<Entry> list : values){
-            if(!(list == null)){
+            if(list != null){
                 list.clear();
             }
         }
@@ -148,7 +150,7 @@ public class OurHashMap<K,V> implements Map<K,V> {
     public Set keySet() {
         Set<K> keys = new HashSet();
         for(List<Entry> list : values){
-            if(!(list == null)){
+            if(list != null){
                 for(Entry entry : list){
                     keys.add((K) entry.key);
                 }
@@ -161,7 +163,7 @@ public class OurHashMap<K,V> implements Map<K,V> {
     public Collection values() {
         Collection<V> mapValues = new HashSet();
         for(List<Entry> list : values){
-            if(!(list == null)){
+            if(list != null){
                 for(Entry entry : list){
                     mapValues.add((V) entry.value);
                 }
