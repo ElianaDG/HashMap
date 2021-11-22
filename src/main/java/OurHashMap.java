@@ -110,21 +110,19 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     @Override
     public V remove(Object key) {
-        //V value = null;
         int hashcode = key.hashCode();
         int index = Math.abs(hashcode) % SIZE;
         List<Entry> list = values[index];
         if(!(list == null)){
             for(Entry entry : list){
                 if(entry.key.equals(key)){
-                    return (V) entry.value;
-                    //value = (V) entry.value;
-                    //list.remove(entry);
+                    V value = (V) entry.value;
+                    list.remove(entry);
+                    return value;
                 }
             }
         }
         return null;
-        //return value;
     }
 
     @Override

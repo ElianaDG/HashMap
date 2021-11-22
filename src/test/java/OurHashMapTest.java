@@ -153,7 +153,7 @@ class OurHashMapTest {
 
         //then
         Assertions.assertEquals("Hello", removed);
-        //Assertions.assertFalse(map.containsValue("Hello"));
+        Assertions.assertFalse(map.containsValue("Hello"));
     }
 
     @Test
