@@ -21,7 +21,9 @@ public class OurHashMap<K,V> implements Map<K,V> {
     public int size() {
         int size = 0;
         for(List<Entry> list : values){
-            size += list.size();
+            if(!(list == null)){
+                size += list.size();
+            }
         }
         return size;
     }
@@ -29,8 +31,10 @@ public class OurHashMap<K,V> implements Map<K,V> {
     @Override
     public boolean isEmpty() {
         for(List<Entry> list : values){
-            if(!list.isEmpty()){
-                return false;
+            if(!(list == null)){
+                if(!list.isEmpty()){
+                    return false;
+                }
             }
         }
         return true;
@@ -51,12 +55,16 @@ public class OurHashMap<K,V> implements Map<K,V> {
         }
         return false;
     }
-//which way is right, above or below?
+
     @Override
     public boolean containsValue(Object value) {
         for(List<Entry> list : values){
-            if(list.contains(value)){
-                return true;
+            if(!(list == null)){
+                for(Entry entry : list){
+                    if(entry.value.equals(value)){
+                        return true;
+                    }
+                }
             }
         }
         return false;
@@ -102,41 +110,47 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     @Override
     public V remove(Object key) {
-        V value = null;
+        //V value = null;
         int hashcode = key.hashCode();
         int index = Math.abs(hashcode) % SIZE;
         List<Entry> list = values[index];
-        if(list == null){
-            return null;
-        }
-        for(Entry entry : list){
-            if(entry.key.equals(key)){
-                value = (V) entry.value;
-                list.remove(entry);
+        if(!(list == null)){
+            for(Entry entry : list){
+                if(entry.key.equals(key)){
+                    return (V) entry.value;
+                    //value = (V) entry.value;
+                    //list.remove(entry);
+                }
             }
         }
-        return value;
+        return null;
+        //return value;
     }
 
     @Override
     public void putAll(Map map) {
-        //dont understand what this method is supposed to do
+        //use methods to get all the values
+        //add them to my values array
     }
 
     @Override
     public void clear() {
         for(List<Entry> list : values){
-            list.clear();
+            if(!(list == null)){
+                list.clear();
+            }
         }
 
     }
 
     @Override
     public Set keySet() {
-        Set keys = null;
+        Set keys = new HashSet();
         for(List<Entry> list : values){
-            for(Entry entry : list){
-                keys.add(entry.key);
+            if(!(list == null)){
+                for(Entry entry : list){
+                    keys.add(entry.key);
+                }
             }
         }
         return keys;
@@ -144,10 +158,12 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     @Override
     public Collection values() {
-        Collection mapValues = null;
+        Collection mapValues = new HashSet();
         for(List<Entry> list : values){
-            for(Entry entry : list){
-                mapValues.add(entry.value);
+            if(!(list == null)){
+                for(Entry entry : list){
+                    mapValues.add(entry.value);
+                }
             }
         }
         return mapValues;
