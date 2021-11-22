@@ -93,6 +93,7 @@ class OurHashMapTest {
 
         //then
         Assertions.assertTrue(map.isEmpty());
+        Assertions.assertEquals(0, map.size());
     }
 
     @Test
@@ -158,6 +159,22 @@ class OurHashMapTest {
 
     @Test
     void putAll(){
+        //given
+        OurHashMap mapA = new OurHashMap<String, String>();
+        OurHashMap mapB = new OurHashMap<String, String>();
+
+        //when
+        mapA.put("English1","Hello");
+        mapA.put("English2","Hi");
+        mapA.put("English3","Hey");
+        mapA.put("Spanish","Hola");
+        mapB.putAll(mapA);
+
+        //then
+        Assertions.assertTrue(mapB.containsKey("English1"));
+        Assertions.assertTrue(mapB.containsKey("English2"));
+        Assertions.assertTrue(mapB.containsKey("English3"));
+        Assertions.assertTrue(mapB.containsKey("Spanish"));
 
     }
 

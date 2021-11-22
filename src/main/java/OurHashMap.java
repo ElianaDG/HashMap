@@ -127,8 +127,11 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     @Override
     public void putAll(Map map) {
-        //use methods to get all the values
-        //add them to my values array
+        Set<K> keys = map.keySet();
+        for(K key : keys){
+            V value = (V) map.get(key);
+            this.put(key, value);
+        }
     }
 
     @Override
@@ -143,11 +146,11 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     @Override
     public Set keySet() {
-        Set keys = new HashSet();
+        Set<K> keys = new HashSet();
         for(List<Entry> list : values){
             if(!(list == null)){
                 for(Entry entry : list){
-                    keys.add(entry.key);
+                    keys.add((K) entry.key);
                 }
             }
         }
@@ -156,11 +159,11 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     @Override
     public Collection values() {
-        Collection mapValues = new HashSet();
+        Collection<V> mapValues = new HashSet();
         for(List<Entry> list : values){
             if(!(list == null)){
                 for(Entry entry : list){
-                    mapValues.add(entry.value);
+                    mapValues.add((V) entry.value);
                 }
             }
         }
