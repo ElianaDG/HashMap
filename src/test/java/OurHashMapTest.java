@@ -2,6 +2,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -154,7 +155,7 @@ class OurHashMapTest {
     @Test
     void putAll(){
         //given
-        OurHashMap mapA = new OurHashMap<String, String>();
+        HashMap mapA = new HashMap<String, String>();
         OurHashMap mapB = new OurHashMap<String, String>();
         mapA.put("English1","Hello");
         mapA.put("English2","Hi");
