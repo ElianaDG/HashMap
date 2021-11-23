@@ -42,16 +42,7 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     @Override
     public boolean containsKey(Object key) {
-        List<Entry> list = getEntries(key);
-        if(list == null){
-            return false;
-        }
-        for(Entry entry : list){
-            if(entry.key.equals(key)){
-                return true;
-            }
-        }
-        return false;
+        return this.get(key) != null;
     }
 
     @Override
@@ -70,7 +61,9 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     @Override
     public V get(Object key) {
-        List<Entry> list = getEntries(key);
+        int hashcode = key.hashCode();
+        int index = Math.abs(hashcode) % SIZE;
+        List<Entry> list = values[index];
         if(list == null){
             return null;
         }
@@ -80,12 +73,6 @@ public class OurHashMap<K,V> implements Map<K,V> {
             }
         }
         return null;
-    }
-
-    private List<Entry> getEntries(Object key) {
-        int hashcode = key.hashCode();
-        int index = Math.abs(hashcode) % SIZE;
-        return values[index];
     }
 
     @Override

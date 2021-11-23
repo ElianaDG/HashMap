@@ -170,6 +170,7 @@ class OurHashMapTest {
         Assertions.assertTrue(mapB.containsKey("English2"));
         Assertions.assertTrue(mapB.containsKey("English3"));
         Assertions.assertTrue(mapB.containsKey("Spanish"));
+        Assertions.assertEquals(mapA.size(), mapB.size());
 
     }
 
