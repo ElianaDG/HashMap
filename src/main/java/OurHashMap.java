@@ -1,75 +1,165 @@
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public class OurHashMap implements Map {
+public class OurHashMap<K,V> implements Map<K,V> {
 
-    private final int SIZE = 1024;
-    Object values[] = new Object[SIZE];
+    private final int SIZE = 16;
+
+    class Entry<K,V> {
+        K key;
+        V value;
+
+        public Entry(K key, V value){
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    List<Entry> values[] = new List[SIZE];
+    //each index in values contains a list of entries
 
     @Override
     public int size() {
-        return 0;
+        int size = 0;
+        for(List<Entry> list : values){
+            if(list != null){
+                size += list.size();
+            }
+        }
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        for(List<Entry> list : values){
+            if(list != null){
+                if(!list.isEmpty()){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
     public boolean containsKey(Object key) {
-        return false;
+        return this.get(key) != null;
     }
 
     @Override
     public boolean containsValue(Object value) {
+        for(List<Entry> list : values){
+            if(list != null){
+                for(Entry entry : list){
+                    if(entry.value.equals(value)){
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
     @Override
-    public Object get(Object key) {
+    public V get(Object key) {
         int hashcode = key.hashCode();
         int index = Math.abs(hashcode) % SIZE;
-        return values[index];
-    }
-
-    @Override
-    public Object put(Object key, Object value) {
-        int hashcode = key.hashCode();
-        int index = Math.abs(hashcode) % SIZE;
-        values[index] = value;
-        // todo return previous value
+        List<Entry> list = values[index];
+        if(list == null){
+            return null;
+        }
+        for(Entry entry : list){
+            if(entry.key.equals(key)){
+                return (V) entry.value;
+            }
+        }
         return null;
     }
 
     @Override
-    public Object remove(Object o) {
+    public V put(K key, V value) {
+        int hashcode = key.hashCode();
+        int index = Math.abs(hashcode) % SIZE;
+        List list = values[index];
+        if(list == null){
+            list = new ArrayList<Entry>();
+            values[index] = list;
+        }
+        for(Entry<K,V> entry : (List<Entry<K,V>>) list){
+            if(entry.key.equals(key)) {
+                V saved = entry.value;
+                entry.value = value;
+                return saved;
+            }
+        }
+
+        Entry entry = new Entry(key, value);
+        list.add(entry);
+        return null;
+    }
+
+    @Override
+    public V remove(Object key) {
+        int hashcode = key.hashCode();
+        int index = Math.abs(hashcode) % SIZE;
+        List<Entry> list = values[index];
+        if(list != null){
+            for(Entry entry : list){
+                if(entry.key.equals(key)){
+                    V value = (V) entry.value;
+                    list.remove(entry);
+                    return value;
+                }
+            }
+        }
         return null;
     }
 
     @Override
     public void putAll(Map map) {
-
+        Set<Map.Entry<K,V>> entrySet = map.entrySet();
+        for(Map.Entry<K,V> entry : entrySet){
+            this.put(entry.getKey(), entry.getValue());
+        }
     }
 
     @Override
     public void clear() {
+        for(List<Entry> list : values){
+            if(list != null){
+                list.clear();
+            }
+        }
 
     }
 
     @Override
     public Set keySet() {
-        return null;
+        Set<K> keys = new HashSet();
+        for(List<Entry> list : values){
+            if(list != null){
+                for(Entry entry : list){
+                    keys.add((K) entry.key);
+                }
+            }
+        }
+        return keys;
     }
 
     @Override
     public Collection values() {
-        return null;
+        Collection<V> mapValues = new HashSet();
+        for(List<Entry> list : values){
+            if(list != null){
+                for(Entry entry : list){
+                    mapValues.add((V) entry.value);
+                }
+            }
+        }
+        return mapValues;
     }
 
     @Override
-    public Set<Entry> entrySet() {
+    public Set<java.util.Map.Entry<K,V>> entrySet() {
         return null;
     }
 }
